@@ -28,7 +28,7 @@ function love.load()
     math.randomseed(os.time())
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
-        fullscreen = false,
+        fullscreen = true,
         resizable = true,
         vsync = true,
         canvas = false
@@ -89,7 +89,9 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
-    if key == 'enter' or key == 'return' then
+    if key == 'escape' then
+        love.event.quit()
+    elseif key == 'enter' or key == 'return' then
         if gameState == 'start' then
             gameState = 'play'
         elseif gameState == 'done' then
@@ -113,6 +115,8 @@ function love.draw()
         love.graphics.setFont(smallFont)
         love.graphics.printf('Welcome to Couch Smash!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter to begin!', 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Press Escape to exit!', 0, 30, VIRTUAL_WIDTH, 'center')
+
         
     elseif gameState == 'play' then
         endTime = love.timer.getTime()
@@ -141,6 +145,7 @@ function love.draw()
                 love.graphics.setFont(smallFont)
                 love.graphics.printf('Better luck next time!', 0, 10, VIRTUAL_WIDTH, 'center')
                 love.graphics.printf('Press Enter to start over!', 0, 20, VIRTUAL_WIDTH, 'center')
+                love.graphics.printf('Press Escape to exit!', 0, 30, VIRTUAL_WIDTH, 'center')
                 level = _G[levels[currentLevel]]()
             end
     
@@ -149,6 +154,8 @@ function love.draw()
         love.graphics.printf('Amazing! You completed the game!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Level completion time: ' .. tostring(formTime), 0, 20, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Total Time: ' .. tostring(totalTime), 0, 30, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Press Escape to exit!', 0, 40, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Take a screenshot to share your result!', 0, 50, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter to restart!', 0, VIRTUAL_HEIGHT - 10, VIRTUAL_WIDTH, 'center')
     end
     push:finish()
